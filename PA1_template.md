@@ -57,11 +57,13 @@ spd<-ddply(data, .(date), summarize, steps_per_day = sum(steps))
 spd_cc<-na.omit(spd)
 par(mar=c(4,5,1.5,1.5))
 with(spd_cc, plot(date,steps_per_day, type="h", 
-                  lwd=5, col="gold", main="Total number of steps per day", 
-                  ylab="Steps per day", las=1,mgp=c(3,0.2,0), tck=0.02))
+                  lwd=8, col="gold", main="Total number of steps per day",
+                  xlab="Dates in 2012", ylab="Steps per day", 
+                  las=1,mgp=c(2,0.2,0), tck=0.02))
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+
 
 Calculation of the mean and median total number of steps per day:
 
