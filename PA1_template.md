@@ -174,7 +174,8 @@ isna[2,2]
 ## [1] 2304
 ```
 
-We make a dataframe where NA's are filled with the average for that interval.
+We make a dataframe where NA's are substituded with the average for that interval.
+
 
 ```r
 merged_df = merge(data, av_per_in_df_cc, by="interval")
@@ -182,15 +183,15 @@ merged_df = merge(data, av_per_in_df_cc, by="interval")
 for(n in 1:length(merged_df$steps)){
   if(is.na(merged_df[n,'steps'])){merged_df[,'steps']<-merged_df[,'ave_per_interval']}  
 }
-ordered_merged_df<-merged_df[order(merged_df$date),]
-ordered_merged_df<-ordered_merged_df[c("steps", "date", "interval")]
+new_data<-merged_df[order(merged_df$date),]
+new_data<-new_data[c("steps", "date", "interval")]
 ```
 
 And we take a look the head of the resulting dataframe:
 
 
 ```r
-head(ordered_merged_df)
+head(new_data)
 ```
 
 ```
