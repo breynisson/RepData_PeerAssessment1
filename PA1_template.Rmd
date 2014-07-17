@@ -3,11 +3,51 @@
 
 ## Loading and preprocessing the data
 
+We load the data into our environment:
+
+```{r}
+data<-read.csv("activity.csv")
+```
+ 
+Let's take a look at the data:
+
+```{r}
+str(data)
+```
+ 
+We transform the date column into date-types:
+
+```{r}
+data$date<-as.Date(as.character(data$date))
+```
+ 
+And check the data again, to verify that our transformation worked:
+
+```{r}
+str(data)
+```
 
 
 ## What is mean total number of steps taken per day?
 
+We sum the number of steps per day and plot the histogram:
 
+```{r}
+library(plyr)
+spd<-ddply(data, .(date), summarize, steps_per_day = sum(steps))
+spd_cc<-na.omit(spd)
+par(mar=c(4,5,1.5,1.5))
+with(spd_cc, plot(date,steps_per_day, type="h", lwd=5, col="gold", main="Total number of steps per day", ylab="Steps per day", las=1,mgp=c(3,0.2,0), tck=0.02))
+ 
+```
+
+Calculation of the mean and median total number of steps per day:
+
+```{r}
+df<-ddply(data, .(date), summarize,mean_value = mean(steps, na.rm=TRUE), 
+          median_value = median(steps, na.rm=TRUE))
+print(df)
+```
 
 ## What is the average daily activity pattern?
 
