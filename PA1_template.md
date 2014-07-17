@@ -3,7 +3,7 @@
 
 ## Loading and preprocessing the data
 
-We load the data into our environment:
+We assume that the data is present in the workspace. If not, the data should be loaded and unzipped into the workspace. We load the data into our environment:
 
 
 ```r
@@ -56,7 +56,9 @@ library(plyr)
 spd<-ddply(data, .(date), summarize, steps_per_day = sum(steps))
 spd_cc<-na.omit(spd)
 par(mar=c(4,5,1.5,1.5))
-with(spd_cc, plot(date,steps_per_day, type="h", lwd=5, col="gold", main="Total number of steps per day", ylab="Steps per day", las=1,mgp=c(3,0.2,0), tck=0.02))
+with(spd_cc, plot(date,steps_per_day, type="h", 
+                  lwd=5, col="gold", main="Total number of steps per day", 
+                  ylab="Steps per day", las=1,mgp=c(3,0.2,0), tck=0.02))
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
