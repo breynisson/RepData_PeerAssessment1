@@ -166,15 +166,42 @@ which.max(av_per_in_df_cc$ave_per_interval)
 We start off by calculating missing values:
 
 ```r
-count(is.na(data$steps))
+isna<-count(is.na(data$steps))
+isna[2,2]
 ```
 
 ```
-##       x  freq
-## 1 FALSE 15264
-## 2  TRUE  2304
+## [1] 2304
 ```
 
+We make a dataframe where NA's are filled with the average for that interval.
+
+```r
+merged_df = merge(data, av_per_in_df_cc, by="interval")
+
+for(n in 1:length(merged_df$steps)){
+  if(is.na(merged_df[n,'steps'])){merged_df[,'steps']<-merged_df[,'ave_per_interval']}  
+}
+ordered_merged_df<-merged_df[order(merged_df$date),]
+ordered_merged_df<-ordered_merged_df[c("steps", "date", "interval")]
+```
+
+And we take a look the head of the resulting dataframe:
+
+
+```r
+head(ordered_merged_df)
+```
+
+```
+##       steps       date interval
+## 1   1.71698 2012-10-01        0
+## 63  0.33962 2012-10-01        5
+## 128 0.13208 2012-10-01       10
+## 205 0.15094 2012-10-01       15
+## 264 0.07547 2012-10-01       20
+## 327 2.09434 2012-10-01       25
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?

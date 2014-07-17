@@ -336,12 +336,36 @@ with(av_per_in_df_cc, plot(ave_per_interval, type=&quot;l&quot;,
 
 <p>We start off by calculating missing values:</p>
 
-<pre><code class="r">count(is.na(data$steps))
+<pre><code class="r">isna&lt;-count(is.na(data$steps))
+isna[2,2]
 </code></pre>
 
-<pre><code>##       x  freq
-## 1 FALSE 15264
-## 2  TRUE  2304
+<pre><code>## [1] 2304
+</code></pre>
+
+<p>We make a dataframe where NA&#39;s are filled with the average for that interval.</p>
+
+<pre><code class="r">merged_df = merge(data, av_per_in_df_cc, by=&quot;interval&quot;)
+
+for(n in 1:length(merged_df$steps)){
+  if(is.na(merged_df[n,&#39;steps&#39;])){merged_df[,&#39;steps&#39;]&lt;-merged_df[,&#39;ave_per_interval&#39;]}  
+}
+ordered_merged_df&lt;-merged_df[order(merged_df$date),]
+ordered_merged_df&lt;-ordered_merged_df[c(&quot;steps&quot;, &quot;date&quot;, &quot;interval&quot;)]
+</code></pre>
+
+<p>And we take a look the head of the resulting dataframe:</p>
+
+<pre><code class="r">head(ordered_merged_df)
+</code></pre>
+
+<pre><code>##       steps       date interval
+## 1   1.71698 2012-10-01        0
+## 63  0.33962 2012-10-01        5
+## 128 0.13208 2012-10-01       10
+## 205 0.15094 2012-10-01       15
+## 264 0.07547 2012-10-01       20
+## 327 2.09434 2012-10-01       25
 </code></pre>
 
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
