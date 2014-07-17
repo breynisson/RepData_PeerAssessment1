@@ -204,5 +204,21 @@ head(new_data)
 ## 327 2.09434 2012-10-01       25
 ```
 
+We compare this with the head of the original data:
+
+
+```r
+head(data)
+```
+
+```
+##   steps       date interval
+## 1    NA 2012-10-01        0
+## 2    NA 2012-10-01        5
+## 3    NA 2012-10-01       10
+## 4    NA 2012-10-01       15
+## 5    NA 2012-10-01       20
+## 6    NA 2012-10-01       25
+```
 
 ## Are there differences in activity patterns between weekdays and weekends?

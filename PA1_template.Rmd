@@ -95,5 +95,10 @@ And we take a look the head of the resulting dataframe:
 head(new_data)
 ```
 
+We compare this with the head of the original data:
+
+```{r}
+head(data)
+```
 
 ## Are there differences in activity patterns between weekdays and weekends?
