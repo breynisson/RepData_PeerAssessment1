@@ -54,10 +54,21 @@ print(df)
 ```
 
 ## What is the average daily activity pattern?
+```{r, fig.width=8}
+av_per_int_df<-ddply(data, .(interval), summarize, ave_per_interval = mean(steps, na.rm=TRUE))
+av_per_in_df_cc<-na.omit(av_per_int_df)
+with(av_per_in_df_cc, plot(ave_per_interval, type="l",
+                           xlab="Interval", ylab="Average Steps Per Interval",
+                           main="Average Daily Activity Pattern"))
+```
 
+We find the interval with the highest average number of steps:
 
+```{r, results='asis'}
+which.max(av_per_in_df_cc$ave_per_interval)
+```
 
-## Imputing missing values
+## Inputing missing values
 
 
 
