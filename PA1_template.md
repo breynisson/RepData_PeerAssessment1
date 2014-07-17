@@ -54,13 +54,6 @@ We sum the number of steps per day and plot the histogram:
 ```r
 library(plyr)
 spd<-ddply(data, .(date), summarize, steps_per_day = sum(steps))
-```
-
-```
-## Error: argument "by" is missing, with no default
-```
-
-```r
 spd_cc<-na.omit(spd)
 par(mar=c(4,5,1.5,1.5))
 with(spd_cc, plot(date,steps_per_day, type="h", 
@@ -78,13 +71,6 @@ Calculation of the mean and median total number of steps per day:
 ```r
 df<-ddply(data, .(date), summarize,mean_value = mean(steps, na.rm=TRUE), 
           median_value = median(steps, na.rm=TRUE))
-```
-
-```
-## Error: argument "by" is missing, with no default
-```
-
-```r
 colnames(df)<-c("Date", "Mean", "Median")
 print.data.frame(df, right=FALSE, row.names=FALSE)
 ```
@@ -158,13 +144,6 @@ print.data.frame(df, right=FALSE, row.names=FALSE)
 
 ```r
 av_per_int_df<-ddply(data, .(interval), summarize, ave_per_interval = mean(steps, na.rm=TRUE))
-```
-
-```
-## Error: argument "by" is missing, with no default
-```
-
-```r
 av_per_in_df_cc<-na.omit(av_per_int_df)
 with(av_per_in_df_cc, plot(ave_per_interval, type="l",
                            xlab="Interval", ylab="Average Steps Per Interval",

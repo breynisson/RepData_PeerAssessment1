@@ -232,12 +232,7 @@ hr {
 
 <pre><code class="r">library(plyr)
 spd&lt;-ddply(data, .(date), summarize, steps_per_day = sum(steps))
-</code></pre>
-
-<pre><code>## Error: argument &quot;by&quot; is missing, with no default
-</code></pre>
-
-<pre><code class="r">spd_cc&lt;-na.omit(spd)
+spd_cc&lt;-na.omit(spd)
 par(mar=c(4,5,1.5,1.5))
 with(spd_cc, plot(date,steps_per_day, type=&quot;h&quot;, 
                   lwd=8, col=&quot;gold&quot;, main=&quot;Total number of steps per day&quot;,
@@ -251,12 +246,7 @@ with(spd_cc, plot(date,steps_per_day, type=&quot;h&quot;,
 
 <pre><code class="r">df&lt;-ddply(data, .(date), summarize,mean_value = mean(steps, na.rm=TRUE), 
           median_value = median(steps, na.rm=TRUE))
-</code></pre>
-
-<pre><code>## Error: argument &quot;by&quot; is missing, with no default
-</code></pre>
-
-<pre><code class="r">colnames(df)&lt;-c(&quot;Date&quot;, &quot;Mean&quot;, &quot;Median&quot;)
+colnames(df)&lt;-c(&quot;Date&quot;, &quot;Mean&quot;, &quot;Median&quot;)
 print.data.frame(df, right=FALSE, row.names=FALSE)
 </code></pre>
 
@@ -327,12 +317,7 @@ print.data.frame(df, right=FALSE, row.names=FALSE)
 <h2>What is the average daily activity pattern?</h2>
 
 <pre><code class="r">av_per_int_df&lt;-ddply(data, .(interval), summarize, ave_per_interval = mean(steps, na.rm=TRUE))
-</code></pre>
-
-<pre><code>## Error: argument &quot;by&quot; is missing, with no default
-</code></pre>
-
-<pre><code class="r">av_per_in_df_cc&lt;-na.omit(av_per_int_df)
+av_per_in_df_cc&lt;-na.omit(av_per_int_df)
 with(av_per_in_df_cc, plot(ave_per_interval, type=&quot;l&quot;,
                            xlab=&quot;Interval&quot;, ylab=&quot;Average Steps Per Interval&quot;,
                            main=&quot;Average Daily Activity Pattern&quot;))
