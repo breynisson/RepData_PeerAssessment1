@@ -161,7 +161,7 @@ which.max(av_per_in_df_cc$ave_per_interval)
 
 [1] 104
 
-## Inputing missing values
+## Iputing missing values
 
 We start off by calculating missing values:
 
