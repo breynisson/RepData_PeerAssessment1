@@ -145,7 +145,7 @@ print.data.frame(df, right=FALSE, row.names=FALSE)
 ```r
 av_per_int_df<-ddply(data, .(interval), summarize, ave_per_interval = mean(steps, na.rm=TRUE))
 av_per_in_df_cc<-na.omit(av_per_int_df)
-with(av_per_in_df_cc, plot(ave_per_interval, type="l",
+with(av_per_in_df_cc, plot( interval,ave_per_interval, type="l",
                            xlab="Interval", ylab="Average Steps Per Interval",
                            main="Average Daily Activity Pattern"))
 ```
@@ -313,3 +313,129 @@ print.data.frame(n_df, right=FALSE, row.names=FALSE)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+We start out by making a new column which gives the day of the week:
+
+
+```r
+new_data$weekdays<-weekdays(new_data$date)
+```
+
+And we take a look at the head and tail of the data frame:
+
+
+```r
+head(new_data)
+```
+
+```
+##       steps       date interval weekdays
+## 1   1.71698 2012-10-01        0   Monday
+## 63  0.33962 2012-10-01        5   Monday
+## 128 0.13208 2012-10-01       10   Monday
+## 205 0.15094 2012-10-01       15   Monday
+## 264 0.07547 2012-10-01       20   Monday
+## 327 2.09434 2012-10-01       25   Monday
+```
+
+```r
+tail(new_data)
+```
+
+```
+##        steps       date interval weekdays
+## 17242 2.6038 2012-11-30     2330   Friday
+## 17305 4.6981 2012-11-30     2335   Friday
+## 17364 3.3019 2012-11-30     2340   Friday
+## 17441 0.6415 2012-11-30     2345   Friday
+## 17506 0.2264 2012-11-30     2350   Friday
+## 17568 1.0755 2012-11-30     2355   Friday
+```
+
+The "weekday" column is an temporary column that we will use to generate a column with the weekday/weekend factors. This column is called "day". The code listing follows, along with a look at the head of the resulting dataframe:
+
+
+```r
+for(n in 1:length(new_data$weekdays)){
+  if(new_data$weekdays[n] == 'Saturday' | new_data$weekdays[n] =='Sunday') {
+    new_data$day[n]<-"weekend" }
+  else new_data$day[n]<-"weekday" 
+}
+new_data$day<-as.factor(new_data$day)
+head(new_data)
+```
+
+```
+##       steps       date interval weekdays     day
+## 1   1.71698 2012-10-01        0   Monday weekday
+## 63  0.33962 2012-10-01        5   Monday weekday
+## 128 0.13208 2012-10-01       10   Monday weekday
+## 205 0.15094 2012-10-01       15   Monday weekday
+## 264 0.07547 2012-10-01       20   Monday weekday
+## 327 2.09434 2012-10-01       25   Monday weekday
+```
+
+We then make two subsets, one of the weekdays and one of the weekend:
+
+```r
+weekdays_df<-new_data[new_data$day=="weekday",]
+weekend_df<-new_data[new_data$day=="weekend",]
+```
+
+And we check the resulting datasets:
+
+
+```r
+str(weekdays_df)
+```
+
+```
+## 'data.frame':	12960 obs. of  5 variables:
+##  $ steps   : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
+##  $ date    : Date, format: "2012-10-01" "2012-10-01" ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ weekdays: chr  "Monday" "Monday" "Monday" "Monday" ...
+##  $ day     : Factor w/ 2 levels "weekday","weekend": 1 1 1 1 1 1 1 1 1 1 ...
+```
+
+```r
+head(weekdays_df)
+```
+
+```
+##       steps       date interval weekdays     day
+## 1   1.71698 2012-10-01        0   Monday weekday
+## 63  0.33962 2012-10-01        5   Monday weekday
+## 128 0.13208 2012-10-01       10   Monday weekday
+## 205 0.15094 2012-10-01       15   Monday weekday
+## 264 0.07547 2012-10-01       20   Monday weekday
+## 327 2.09434 2012-10-01       25   Monday weekday
+```
+
+```r
+str(weekend_df)
+```
+
+```
+## 'data.frame':	4608 obs. of  5 variables:
+##  $ steps   : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ date    : Date, format: "2012-10-06" "2012-10-06" ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ weekdays: chr  "Saturday" "Saturday" "Saturday" "Saturday" ...
+##  $ day     : Factor w/ 2 levels "weekday","weekend": 2 2 2 2 2 2 2 2 2 2 ...
+```
+
+```r
+head(weekend_df)
+```
+
+```
+##     steps       date interval weekdays     day
+## 26      0 2012-10-06        0 Saturday weekend
+## 96      0 2012-10-06        5 Saturday weekend
+## 150     0 2012-10-06       10 Saturday weekend
+## 231     0 2012-10-06       15 Saturday weekend
+## 272     0 2012-10-06       20 Saturday weekend
+## 343     0 2012-10-06       25 Saturday weekend
+```
+

@@ -58,7 +58,7 @@ print.data.frame(df, right=FALSE, row.names=FALSE)
 ```{r, fig.width=8}
 av_per_int_df<-ddply(data, .(interval), summarize, ave_per_interval = mean(steps, na.rm=TRUE))
 av_per_in_df_cc<-na.omit(av_per_int_df)
-with(av_per_in_df_cc, plot(ave_per_interval, type="l",
+with(av_per_in_df_cc, plot( interval,ave_per_interval, type="l",
                            xlab="Interval", ylab="Average Steps Per Interval",
                            main="Average Daily Activity Pattern"))
 ```
@@ -125,3 +125,44 @@ print.data.frame(n_df, right=FALSE, row.names=FALSE)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+We start out by making a new column which gives the day of the week:
+
+```{r}
+new_data$weekdays<-weekdays(new_data$date)
+```
+
+And we take a look at the head and tail of the data frame:
+
+```{r}
+head(new_data)
+tail(new_data)
+```
+
+The "weekday" column is an temporary column that we will use to generate a column with the weekday/weekend factors. This column is called "day". The code listing follows, along with a look at the head of the resulting dataframe:
+
+```{r}
+for(n in 1:length(new_data$weekdays)){
+  if(new_data$weekdays[n] == 'Saturday' | new_data$weekdays[n] =='Sunday') {
+    new_data$day[n]<-"weekend" }
+  else new_data$day[n]<-"weekday" 
+}
+new_data$day<-as.factor(new_data$day)
+head(new_data)
+```
+
+We then make two subsets, one of the weekdays and one of the weekend:
+```{r}
+weekdays_df<-new_data[new_data$day=="weekday",]
+weekend_df<-new_data[new_data$day=="weekend",]
+```
+
+And we check the resulting datasets:
+
+```{r}
+str(weekdays_df)
+head(weekdays_df)
+str(weekend_df)
+head(weekend_df)
+```
+
