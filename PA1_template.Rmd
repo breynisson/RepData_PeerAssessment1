@@ -77,7 +77,7 @@ isna<-count(is.na(data$steps))
 isna[2,2]
 ```
 
-We make a dataframe where NA's are substituded with the average for that interval.
+The substitution strategy we will use is very simple. We will replece each NA with the average value for that interval. We will use the averages as is, that is, there will be no casting of the values to integers. We make a dataframe where NA's are substituded with the average for that interval.
 
 ```{r}
 merged_df = merge(data, av_per_in_df_cc, by="interval")
@@ -159,12 +159,4 @@ library(lattice)
 xyplot(steps ~ interval | day, data=new_data, type="l", 
        layout=c(1,2), xlab="Interval", ylab="Number of Steps")
 ```
-
-
-
-
-
-
-
-
 

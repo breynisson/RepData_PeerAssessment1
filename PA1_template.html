@@ -343,7 +343,7 @@ isna[2,2]
 <pre><code>## [1] 2304
 </code></pre>
 
-<p>We make a dataframe where NA&#39;s are substituded with the average for that interval.</p>
+<p>The substitution strategy we will use is very simple. We will replece each NA with the average value for that interval. We will use the averages as is, that is, there will be no casting of the values to integers. We make a dataframe where NA&#39;s are substituded with the average for that interval.</p>
 
 <pre><code class="r">merged_df = merge(data, av_per_in_df_cc, by=&quot;interval&quot;)
 

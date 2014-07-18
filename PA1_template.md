@@ -174,7 +174,7 @@ isna[2,2]
 ## [1] 2304
 ```
 
-We make a dataframe where NA's are substituded with the average for that interval.
+The substitution strategy we will use is very simple. We will replece each NA with the average value for that interval. We will use the averages as is, that is, there will be no casting of the values to integers. We make a dataframe where NA's are substituded with the average for that interval.
 
 
 ```r
@@ -386,12 +386,4 @@ xyplot(steps ~ interval | day, data=new_data, type="l",
 ```
 
 ![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18.png) 
-
-
-
-
-
-
-
-
 
