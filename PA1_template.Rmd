@@ -139,7 +139,7 @@ head(new_data)
 tail(new_data)
 ```
 
-The "weekday" column is an temporary column that we will use to generate a column with the weekday/weekend factors. This column is called "day". The code listing follows, along with a look at the head of the resulting dataframe:
+The "weekday" column is an temporary column that we will use to generate a column with the weekday/weekend factors. This column is called "day", for a lack of better name. The code listing follows, along with a look at the head of the resulting dataframe:
 
 ```{r}
 for(n in 1:length(new_data$weekdays)){
@@ -156,7 +156,8 @@ We then plot the activities based on the weekdays/weekend factors:
 
 ```{r, fig.width=8, fig.height=6}
 library(lattice)
-xyplot(steps ~ interval | day, data=new_data, type="l", layout=c(1,2), xlab="Interval", ylab="Number of Steps")
+xyplot(steps ~ interval | day, data=new_data, type="l", 
+       layout=c(1,2), xlab="Interval", ylab="Number of Steps")
 ```
 
 
