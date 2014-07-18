@@ -375,67 +375,22 @@ head(new_data)
 ## 327 2.09434 2012-10-01       25   Monday weekday
 ```
 
-We then make two subsets, one of the weekdays and one of the weekend:
 
-```r
-weekdays_df<-new_data[new_data$day=="weekday",]
-weekend_df<-new_data[new_data$day=="weekend",]
-```
-
-And we check the resulting datasets:
+We then plot the activities based on the weekdays/weekend factors:
 
 
 ```r
-str(weekdays_df)
+library(lattice)
+xyplot(steps ~ interval | day, data=new_data, type="l", layout=c(1,2), xlab="Interval", ylab="Number of Steps")
 ```
 
-```
-## 'data.frame':	12960 obs. of  5 variables:
-##  $ steps   : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
-##  $ date    : Date, format: "2012-10-01" "2012-10-01" ...
-##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
-##  $ weekdays: chr  "Monday" "Monday" "Monday" "Monday" ...
-##  $ day     : Factor w/ 2 levels "weekday","weekend": 1 1 1 1 1 1 1 1 1 1 ...
-```
+![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18.png) 
 
-```r
-head(weekdays_df)
-```
 
-```
-##       steps       date interval weekdays     day
-## 1   1.71698 2012-10-01        0   Monday weekday
-## 63  0.33962 2012-10-01        5   Monday weekday
-## 128 0.13208 2012-10-01       10   Monday weekday
-## 205 0.15094 2012-10-01       15   Monday weekday
-## 264 0.07547 2012-10-01       20   Monday weekday
-## 327 2.09434 2012-10-01       25   Monday weekday
-```
 
-```r
-str(weekend_df)
-```
 
-```
-## 'data.frame':	4608 obs. of  5 variables:
-##  $ steps   : num  0 0 0 0 0 0 0 0 0 0 ...
-##  $ date    : Date, format: "2012-10-06" "2012-10-06" ...
-##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
-##  $ weekdays: chr  "Saturday" "Saturday" "Saturday" "Saturday" ...
-##  $ day     : Factor w/ 2 levels "weekday","weekend": 2 2 2 2 2 2 2 2 2 2 ...
-```
 
-```r
-head(weekend_df)
-```
 
-```
-##     steps       date interval weekdays     day
-## 26      0 2012-10-06        0 Saturday weekend
-## 96      0 2012-10-06        5 Saturday weekend
-## 150     0 2012-10-06       10 Saturday weekend
-## 231     0 2012-10-06       15 Saturday weekend
-## 272     0 2012-10-06       20 Saturday weekend
-## 343     0 2012-10-06       25 Saturday weekend
-```
+
+
 

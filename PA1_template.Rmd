@@ -151,18 +151,19 @@ new_data$day<-as.factor(new_data$day)
 head(new_data)
 ```
 
-We then make two subsets, one of the weekdays and one of the weekend:
-```{r}
-weekdays_df<-new_data[new_data$day=="weekday",]
-weekend_df<-new_data[new_data$day=="weekend",]
+
+We then plot the activities based on the weekdays/weekend factors:
+
+```{r, fig.width=8, fig.height=6}
+library(lattice)
+xyplot(steps ~ interval | day, data=new_data, type="l", layout=c(1,2), xlab="Interval", ylab="Number of Steps")
 ```
 
-And we check the resulting datasets:
 
-```{r}
-str(weekdays_df)
-head(weekdays_df)
-str(weekend_df)
-head(weekend_df)
-```
+
+
+
+
+
+
 
