@@ -83,7 +83,7 @@ We make a dataframe where NA's are substituded with the average for that interva
 merged_df = merge(data, av_per_in_df_cc, by="interval")
 
 for(n in 1:length(merged_df$steps)){
-  if(is.na(merged_df[n,'steps'])){merged_df[,'steps']<-merged_df[,'ave_per_interval']}  
+  if(is.na(merged_df[n,'steps'])){merged_df[n,'steps']<-merged_df[n,'ave_per_interval']}  
 }
 new_data<-merged_df[order(merged_df$date),]
 new_data<-new_data[c("steps", "date", "interval")]
@@ -95,10 +95,33 @@ And we take a look the head of the resulting dataframe:
 head(new_data)
 ```
 
-We compare this with the head of the original data:
+We now take a look at the head of the original data for comparison:
 
 ```{r}
 head(data)
+```
+
+We see that the new_data no longer has the NA values.
+
+The next step is to sum the data and plot the histogram for the new dataset:
+
+```{r, fig.width=8}
+n_spd<-ddply(new_data, .(date), summarize, n_steps_per_day = sum(steps))
+par(mar=c(4,5,1.5,1.5))
+with(n_spd, plot(date,n_steps_per_day, type="h", 
+                  lwd=8, col="gold", main="Total number of steps per day",
+                  xlab="Dates in 2012", ylab="Steps per day", cex.axis=0.7,
+                  las=1,mgp=c(2,0.2,0), tck=0.02))
+ 
+```
+
+Calculation of the mean and median total number of steps per day for the new dataset:
+
+```{r}
+n_df<-ddply(new_data, .(date), summarize,mv = mean(steps, na.rm=TRUE), 
+          medv = median(steps, na.rm=TRUE))
+colnames(n_df)<-c("Date", "Mean", "Median")
+print.data.frame(n_df, right=FALSE, row.names=FALSE)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
