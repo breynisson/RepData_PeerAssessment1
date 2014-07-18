@@ -69,7 +69,7 @@ We find the interval with the highest average number of steps:
 which.max(av_per_in_df_cc$ave_per_interval)
 ```
 
-## Iputing missing values
+## Imputing missing values
 
 We start off by calculating missing values:
 ```{r}
